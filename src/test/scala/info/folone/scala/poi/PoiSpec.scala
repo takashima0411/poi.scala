@@ -30,10 +30,14 @@ class PoiSpec extends Specification with ScalaCheck {
             })
           })
         }
-        val path = "/tmp/book.xls"
-        val io = wb.safeToFile(path)
+        val testBookPath = if( System.getProperty("os.name").toLowerCase.contains("win") ){
+          "C:\\Windows\\Temp\\testBook.xlsx"
+        } else {
+          "/tmp/testBook.xlsx"
+        }
+        val io = wb.safeToFile(testBookPath)
         io.fold(ex ⇒ throw ex, identity).unsafePerformIO
-        impure.load(path) === wb
+        impure.load(testBookPath) === wb
       }
     }
 

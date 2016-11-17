@@ -42,7 +42,11 @@ class PoiLoadFileSpec extends Specification { def is=
     )
   )), XSSF)
 
-  val testBookPath = "/tmp/testBook.xlsx"
+  val testBookPath = if( System.getProperty("os.name").toLowerCase.contains("win") ){
+    "C:\\Windows\\Temp\\testBook.xlsx"
+  } else {
+    "/tmp/testBook.xlsx"
+  }
 
   val targetWorksheet = {
     new impure.WorkbookImpure(testBook).overwrite(testBookPath)
