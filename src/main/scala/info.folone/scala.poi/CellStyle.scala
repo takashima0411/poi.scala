@@ -12,12 +12,10 @@ case class Font(
 
   def appliedTo(pf: POIFont): POIFont = {
     pf setFontName   name
-    pf setBoldweight boldweight
+    pf setBold       bold
     pf setColor      color
     pf
   }
-
-  private def boldweight = if (bold) POIFont.BOLDWEIGHT_BOLD else POIFont.BOLDWEIGHT_NORMAL
 }
 
 case class DataFormat(

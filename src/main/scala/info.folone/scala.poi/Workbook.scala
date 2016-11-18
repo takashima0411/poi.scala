@@ -2,7 +2,7 @@ package info.folone.scala.poi
 
 import org.apache.poi._
 import ss.usermodel.{Workbook ⇒ POIWorkbook, WorkbookFactory}
-import ss.usermodel.{ Row ⇒ POIRow, Cell ⇒ POICell, CellStyle ⇒ POICellStyle }
+import ss.usermodel.{ Row ⇒ POIRow, Cell ⇒ POICell, CellType ⇒ POICellType, CellStyle ⇒ POICellStyle }
 import java.io.{ File, FileOutputStream, OutputStream, InputStream }
 
 import scalaz._
@@ -163,14 +163,14 @@ object Workbook {
           Row(row.getRowNum) {
             cellLst.flatMap { cell ⇒
               val index = cell.getColumnIndex
-              cell.getCellType match {
-                case POICell.CELL_TYPE_NUMERIC ⇒
+              cell.getCellTypeEnum match {
+                case POICellType.NUMERIC ⇒
                   Some(NumericCell(index, cell.getNumericCellValue))
-                case POICell.CELL_TYPE_BOOLEAN ⇒
+                case POICellType.BOOLEAN ⇒
                   Some(BooleanCell(index, cell.getBooleanCellValue))
-                case POICell.CELL_TYPE_FORMULA ⇒
+                case POICellType.FORMULA ⇒
                   Some(FormulaCell(index, cell.getCellFormula))
-                case POICell.CELL_TYPE_STRING  ⇒
+                case POICellType.STRING  ⇒
                   Some(StringCell(index, cell.getStringCellValue))
                 case _                      ⇒ None
               }
